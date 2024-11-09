@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vehicle Details</title>
+  <style>
+body {
+  font-family: 'Times New Roman', Times, serif;
+  margin: 0;
+  padding: 0;
+  background: #783d3d;
+}
+
+header {
+  background: #783d3d;
+  color: #ffffff;
+  padding: 1em 0;
+  text-align: center;
+}
+
+.container {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  background: #ffffff;
+  color: #07dafa;
+  border-radius: 30px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.product-container {
+  margin-bottom: 20px;
+}
+
+.product-container .create-product {
+  text-align: center;
+  font-size: 34px;
+  font-weight: 800;
+}
+
+.form-container {
+  margin-bottom: 20px;
+}
+
+.form-group {
+  margin: 15px;
+  font-size: larger;
+  font-weight: bold;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  margin-top: 15px;
+}
+
+.form-control {
+  background-color: #fdfdff;
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+  border-radius: 30px;
+}
+
+.all-products {
+  height: 50px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background-color: #783d3d;
+  color: #ffffff;
+  margin-bottom: 10px;
+}
+
+.button {
+  display: flex;
+  justify-content: end;
+  margin: 15px;
+}
+
+.btn {
+  background-color: #030303;
+  color: #ffffff;
+  padding: 10px 15px;
+  border-radius: 50px;
+  font-size: larger;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-block;
+}
+
+.button2 {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.btn:hover {
+  background-color: #040101;
+}
+
+.product {
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+}
+
+.product:last-child {
+  border: none;
+}
+
+.product h2 {
+  margin-top: 25px;
+  padding-bottom: 5px;
+  font-size: 30px;
+  font-weight: 800;
+}
+
+.product p {
+  margin: 10px 0;
+  font-size: x-large;
+}
+
+.edit-btn {
+  height: 30px;
+  width: 80px;
+  background-color: #000000;
+  color: rgb(255, 255, 255);
+  font-size: large;
+  border: 1px solid black;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.product small {
+  font-size: large;
+  color: #000000;
+}
+
+.edit-btn:hover {
+  background-color: #090a09;
+}
+
+.delete-btn {
+  height: 30px;
+  width: 80px;
+  background-color: #000000;
+  color: rgb(255, 255, 255);
+  font-size: large;
+  border: 1px solid black;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.delete-btn:hover {
+  background-color: #080302;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: white;
+  background-color: white;
+}
+
+.modal-content {
+  background-color: #783d3d;
+  column-rule: #000000;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #16dbf0;
+  border-radius: 15px;
+  width: 40%;
+}
+
+.close-btn {
+  color: #f7fafa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  background-color: #4caf4f00;
+}
+
+.close-btn:hover,
+.close-btn:focus {
+  color: rgb(250, 6, 6);
+  text-decoration: none;
+  cursor: pointer;
+}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Vehicle Details</h1>
+  </header>
+  <div class="container">
+    <div class="product-container">
+      <h2 class="create-product">Enter your Vehicle</h2>
+      <div class="form-container">
+        <form id="product-form">
+          <div class="form-group">
+            <label for="ProductName">Vehicle Name</label>
+            <input type="text" id="ProductName" class="form-control" placeholder="product name" required>
+            <label for="ManufactureID">Vehicle Model</label>
+            <input type="text" id="ManufactureID" class="form-control" placeholder="manufacture id" required>
+          </div>
+          <div class="form-group">
+            <label for="ProductID">Vehicle ID</label>
+            <input type="text" id="ProductID" class="form-control" placeholder="product id" required>
+          </div>
+          <div class="button">
+              <button type="submit" class="btn">ADD</button>
+          </div>
+        </form>
+      </div>
+      <div class="all-products">
+          <h2>All Vehicles</h2>
+      </div>
+      <div id="products-container"></div>
+    </div>
+  </div>
+  <div id="editModal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn">&times;</span>
+      <form id="edit-form">
+        <h2>Edit Vehicle Details</h2>
+        <div class="form-group">
+          <label for="edit-ProductName"Vehicle Name</label>
+          <input type="text" id="edit-ProductName" class="form-control" required>
+        </div>
+        <div class="form-group">
+          <label for="edit-ManufactureID">Vehicle Model</label>
+          <input type="text" id="edit-ManufactureID" class="form-control" required>
+        </div>
+        <div class="form-group">
+          <label for="edit-ProductID">Vehicle ID</label>
+          <input type="text" id="edit-ProductID" class="form-control" required>
+        </div>
+        <div class="button">
+            <button type="submit" class="btn">Update</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    let currentEditId = null;
+    async function fetchEnquirys() {
+      const response = await fetch('http://localhost:3000/api/Enquiry');
+      const products = await response.json();
+      const container = document.getElementById('products-container');
+      container.innerHTML = '';
+
+      products.forEach(product => {
+        const productDiv = document.createElement('div');
+        productDiv.className = 'product';
+        productDiv.innerHTML = `<h2>${product.ProductName}</h2><p>${product.ProductID}</p><p>${product.ManufactureID}</p><small>Posted on : ${new Date(product.date).toLocaleString()}</small><div class="button2"><button class="edit-btn" onclick="openEditModal('${product._id}', '${product.ProductName}', '${product.ProductID}', '${product.ManufactureID}')">Edit</button>
+    <button class="delete-btn" onclick="deleteEnquiry('${product._id}')">Delete</button></div>`;
+        container.appendChild(productDiv);
+      });
+    }
+    async function createproduct(e) {
+      e.preventDefault();
+      const ProductName = document.getElementById('ProductName').value;
+      const ProductID = document.getElementById('ProductID').value;
+      const ManufactureID = document.getElementById('ManufactureID').value;
+      const response = await fetch('http://localhost:3000/api/Enquiry', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ ProductName, ProductID, ManufactureID })
+      });
+
+      if (response.ok) {
+        document.getElementById('ProductName').value = '';
+        document.getElementById('ProductID').value = '';
+        document.getElementById('ManufactureID').value = '';
+        fetchEnquirys();
+      } else {
+        console.error('Failed to create product:', response.statusText);
+      }
+    }
+    function openEditModal(id, ProductName, ProductID, ManufactureID) {
+      currentEditId = id;
+      document.getElementById('edit-ProductName').value = ProductName;
+      document.getElementById('edit-ProductID').value = ProductID;
+      document.getElementById('edit-ManufactureID').value = ManufactureID;
+      document.getElementById('editModal').style.display = 'block';
+    }
+    async function editEnquiry(e) {
+      e.preventDefault();
+      const ProductName = document.getElementById('edit-ProductName').value;
+      const ProductID = document.getElementById('edit-ProductID').value;
+      const ManufactureID = document.getElementById('edit-ManufactureID').value;
+      if (currentEditId) {
+        const response = await fetch(`http://localhost:3000/api/Enquiry/${currentEditId}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ ProductName, ProductID, ManufactureID })
+        });
+
+        if (response.ok) {
+          fetchEnquirys();
+          closeModal();
+        } else {
+          console.error('Failed to update product:', response.statusText);
+        }
+      }
+    }
+    async function deleteEnquiry(id) {
+      const response = await fetch(`http://localhost:3000/api/Enquiry/${id}`, {
+        method: 'DELETE'
+      });
+
+      if (response.ok) {
+        fetchEnquirys();
+      } else {
+        console.error('Failed to delete product:', response.statusText);
+      }
+    }
+    function closeModal() {
+      document.getElementById('editModal').style.display = 'none';
+      currentEditId = null;
+    }
+    document.getElementById('product-form').addEventListener('submit', createproduct);
+    document.getElementById('edit-form').addEventListener('submit', editEnquiry);
+    document.querySelector('.close-btn').addEventListener('click', closeModal);
+
+    window.onload = fetchEnquirys;
+    window.onclick = function(event) {
+      if (event.target === document.getElementById('editModal')) {
+        closeModal();
+      }
+    }
+  </script>
+</body>
+</html>
