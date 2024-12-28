@@ -4,7 +4,7 @@ const cors = require('cors');
 const path = require('path');
 const app = express();
 
-const PORT = 3000;
+const PORT = 8000;
 
 mongoose.connect("mongodb+srv://shibinshoukath0:shibin@cluster0.0rqh9.mongodb.net/project?retryWrites=true&w=majority&appName=Cluster0",{}
 );

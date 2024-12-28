@@ -234,7 +234,7 @@ header {
       <form id="edit-form">
         <h2>Edit Vehicle Details</h2>
         <div class="form-group">
-          <label for="edit-ProductName"Vehicle Name</label>
+          <label for="edit-ProductName">Vehicle Name</label>
           <input type="text" id="edit-ProductName" class="form-control" required>
         </div>
         <div class="form-group">
@@ -255,7 +255,7 @@ header {
   <script>
     let currentEditId = null;
     async function fetchEnquirys() {
-      const response = await fetch('http://localhost:3000/api/Enquiry');
+      const response = await fetch('http://localhost:8000/api/Enquiry');
       const products = await response.json();
       const container = document.getElementById('products-container');
       container.innerHTML = '';
@@ -273,7 +273,7 @@ header {
       const ProductName = document.getElementById('ProductName').value;
       const ProductID = document.getElementById('ProductID').value;
       const ManufactureID = document.getElementById('ManufactureID').value;
-      const response = await fetch('http://localhost:3000/api/Enquiry', {
+      const response = await fetch('http://localhost:8000/api/Enquiry', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -303,7 +303,7 @@ header {
       const ProductID = document.getElementById('edit-ProductID').value;
       const ManufactureID = document.getElementById('edit-ManufactureID').value;
       if (currentEditId) {
-        const response = await fetch(`http://localhost:3000/api/Enquiry/${currentEditId}`, {
+        const response = await fetch(`http://localhost:8000/api/Enquiry/${currentEditId}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json'
@@ -320,7 +320,7 @@ header {
       }
     }
     async function deleteEnquiry(id) {
-      const response = await fetch(`http://localhost:3000/api/Enquiry/${id}`, {
+      const response = await fetch(`http://localhost:8000/api/Enquiry/${id}`, {
         method: 'DELETE'
       });
 
